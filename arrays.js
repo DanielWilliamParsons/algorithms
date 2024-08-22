@@ -177,12 +177,16 @@ export const makeNumbersArray = () => {
          * This is O(N^2) time efficiency.
          */
         bubbleSort() {
+            let steps = 0;
             let isSorted = false;
             let indexForHighestValue = myArray.length - 1;
             while(isSorted === false){
+                steps++;
                 isSorted = true;
                 for(let i = 0; i < indexForHighestValue; i++){
+                    steps++;
                     if(myArray[i] > myArray[i+1]){
+                        steps++;
                         // swap the values
                         let store = myArray[i]
                         myArray[i] = myArray[i+1];
@@ -193,6 +197,7 @@ export const makeNumbersArray = () => {
                 }
                 indexForHighestValue -= 1;
             }
+            return {numSteps: steps};
         },
 
         /**
@@ -232,5 +237,27 @@ export const makeNumbersArray = () => {
             }
             return {largestNumber: greatestNumber, numSteps: steps};
         },
+
+        selectionSort() {
+            let indexLowestValue = 0;
+            let steps = 0;
+            for(let i = 0; i < myArray.length; i++){
+                steps++
+                for(let j = i + 1; j < myArray.length; j++){
+                    steps++;
+                    if(myArray[j] < myArray[indexLowestValue]){
+                        indexLowestValue = j;
+                    }
+                }
+                // swap i and indexLowestValue
+                if(indexLowestValue !== i){
+                    steps++;
+                    let store = myArray[i];
+                    myArray[i] = myArray[indexLowestValue];
+                    myArray[indexLowestValue] = store;
+                }
+            }
+            return {numSteps: steps};
+        }
     }
 };

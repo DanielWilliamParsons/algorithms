@@ -52,6 +52,8 @@ function averageSteps(searchResults) {
     }
     return [sumStepsLinear / searchResults.length, sumStepsBinary / searchResults.length];
 }
+
+console.log("---Linear Search Versus Binary Search---");
 const sResults = compareLinearAndBinary(100, 50);
 console.log(sResults[1]);
 const searchResults = compareLinearAndBinary(1000, 50);
@@ -67,10 +69,11 @@ function observeBubbleSort(){
     for(let i = 1; i <= 30; i++){
         anArray.addZeroToOneHundred();
     }
-
+    console.log("---Observe Bubble Sort---");
     console.log(anArray.viewArray());
-    anArray.bubbleSort();
+    let numSteps = anArray.bubbleSort();
     console.log(anArray.viewArray());
+    console.log(numSteps);
     
 }
 observeBubbleSort();
@@ -82,8 +85,23 @@ function observeGreatestNumber(){
     for(let i = 1; i <= 30; i++){
         anArray.addZeroToOneHundred();
     }
-
+    console.log("---Compare Greatest Number Algorithms---");
     console.log("Inefficient Version O(n^2): ", anArray.greatestNumberInefficient());
     console.log("Efficient Version O(n): ", anArray.greatestNumberEfficient());
 }
 observeGreatestNumber();
+
+function observeSelectionSort() {
+    let anArray = makeNumbersArray();
+    for(let i = 1; i <= 30; i++){
+        anArray.addZeroToOneHundred();
+    }
+
+    console.log("---Observe Selection Sort - Look above for comparison with bubble sort---");
+    console.log(anArray.viewArray());
+    let numSteps = anArray.selectionSort();
+    console.log(anArray.viewArray());
+    console.log(numSteps);
+    console.log("Even though selection sort takes many fewer steps than bubble sort, they are still both O(N^2)");
+}
+observeSelectionSort();
