@@ -74,3 +74,16 @@ function observeBubbleSort(){
     
 }
 observeBubbleSort();
+
+// Compare efficiency of greatestNumberInefficient and greatestNumberEfficient
+
+function observeGreatestNumber(){
+    let anArray = makeNumbersArray();
+    for(let i = 1; i <= 30; i++){
+        anArray.addZeroToOneHundred();
+    }
+
+    console.log("Inefficient Version O(n^2): ", anArray.greatestNumberInefficient());
+    console.log("Efficient Version O(n): ", anArray.greatestNumberEfficient());
+}
+observeGreatestNumber();

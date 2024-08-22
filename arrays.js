@@ -164,10 +164,17 @@ export const makeNumbersArray = () => {
             return [-1, N];
         },
         /**
-         * Bubble Sort Algorithm
+         * Bubble Sort Algorithm - works on unsorted array
          * Explained on pages 47-53 of
          * `A Common Sense Guide to Data Structures and Algorithms
          * Second edition by Jay Wengrow, 2020`
+         * 
+         * There are (N-1) + (N-2) + (N-3) + ... + 1 comparisons
+         * Worst case scenario: array is sorted in descending order.
+         * Worst case for array of 5 elements would be 10 comparisons and 10 swaps
+         * Worst case for array of 10 elements would be 45 comparisons and 45 swaps.
+         * Worst case for array of 20 elements would be 190 comparisons and 190 swaps.
+         * This is O(N^2) time efficiency.
          */
         bubbleSort() {
             let isSorted = false;
@@ -186,6 +193,44 @@ export const makeNumbersArray = () => {
                 }
                 indexForHighestValue -= 1;
             }
-        }
+        },
+
+        /**
+         * From Exercise 4 on page 61 of
+         * `A Common Sense Guide to Data Structures and Algorithms
+         * Second edition by Jay Wengrow, 2020`
+         * Goal is to re-write the O(N^2) algorithm (greatestNumberInefficient)
+         * so that it is a speedy O(N) algorithm (greatestNumberEfficient)
+         */
+        greatestNumberInefficient() {
+            let steps = 0;
+            for(let i = 0; i < myArray.length; i++){
+                steps++;
+                let isValTheGreatest = true;
+
+                for(let j = 0; j < myArray.length; j++){
+                    steps++;
+                    if(myArray[j] > myArray[i]){
+                        isValTheGreatest = false;
+                    }
+                }
+
+                if(isValTheGreatest){
+                    return {largestNumber: myArray[i], numSteps: steps};
+                }
+            }
+        },
+
+        greatestNumberEfficient() {
+            let greatestNumber = 0;
+            let steps = 0;
+            for(let i = 0; i < myArray.length; i++){
+                if(myArray[i] > greatestNumber){
+                    greatestNumber = myArray[i];
+                }
+                steps++;
+            }
+            return {largestNumber: greatestNumber, numSteps: steps};
+        },
     }
 };
