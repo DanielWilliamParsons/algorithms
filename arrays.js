@@ -101,6 +101,9 @@ export const makeNumbersArray = () => {
          * - The second element is the number of steps taken during the linear search.
          */
         linearSearchOrdered(searchVal) {
+            if(Number.isInteger(searchVal) === false){
+                return [-1, 0];
+            }
             let N = 0; // Number of steps for linear search.
             
             for(const [index, element] of Object.entries(myArray)) {
@@ -129,6 +132,13 @@ export const makeNumbersArray = () => {
          * - The second value is the number of steps taken to complete the search.
          */
         binarySearch(searchVal) {
+            // binarySearch is O(logN) efficiency (time complexity) 
+            // because we divide the array in half each time
+            // For example, if there are 8 elements, diving them in half until
+            // there is only one element remaining takes three steps.
+            if(Number.isInteger(searchVal) === false){
+                return [-1, 0];
+            }
             let N = 0; // Number of steps for linear search
 
             let lowerBound = 0; // Start of myArray
@@ -152,6 +162,30 @@ export const makeNumbersArray = () => {
             }
             // The value is not in my array.
             return [-1, N];
+        },
+        /**
+         * Bubble Sort Algorithm
+         * Explained on pages 47-53 of
+         * `A Common Sense Guide to Data Structures and Algorithms
+         * Second edition by Jay Wengrow, 2020`
+         */
+        bubbleSort() {
+            let isSorted = false;
+            let indexForHighestValue = myArray.length - 1;
+            while(isSorted === false){
+                isSorted = true;
+                for(let i = 0; i < indexForHighestValue; i++){
+                    if(myArray[i] > myArray[i+1]){
+                        // swap the values
+                        let store = myArray[i]
+                        myArray[i] = myArray[i+1];
+                        myArray[i+1] = store
+                        // Update checkSorted
+                        isSorted = false;
+                    }
+                }
+                indexForHighestValue -= 1;
+            }
         }
     }
 };
