@@ -5,11 +5,13 @@ const stackModule = (() => {
 
     const stack = () => {
         let _array = [];
+        let _top;
 
         return {
             popStack: () => {
                 if (_array.length - 1 >= 0){
                     _array.length = _array.length - 1;
+                    _top = _array[_array.length-1];
                 }
                 
             },
@@ -17,14 +19,16 @@ const stackModule = (() => {
             pushStack: (val) => {
                 if (val !== undefined){
                     _array[_array.length] = val;
+                    _top = val;
                 }
                 
             },
 
             getStackTop: () => {
                 if (_array.length){
-                    return _array[_array.length-1];
+                    return _top;
                 } else {
+                    _top = undefined;
                     return undefined;
                 }
                 
