@@ -79,6 +79,38 @@ const linkedListModule = (() => {
                 newNode.addNextNode(currentNode.getNextNode());
                 // Modify the link of the previous node to point to our new node
                 currentNode.addNextNode(newNode);
+            },
+
+            // Delete - delete an item at a given index
+            deleteAtIndex: (index) => {
+                
+                if(index === 0){
+                    nodeToDelete.addNextNode(null);
+                    _firstNode = _firstNode.getNextNode();
+
+                    return;
+                }
+
+                let currentNode = _firstNode;
+                let currentIndex = 0;
+
+                // Find the node we want immediately before the node we want to delete
+                while(currentIndex < (index - 1)){
+                    currentNode = currentNode.getNextNode();
+                    currentIndex += 1;
+                }
+
+                // Get the node that comes immediately after the node we are deleting
+                let nodeAfterDeletedNode = (currentNode.getNextNode()).getNextNode();
+
+                // Get the node to delete so that we can handle any references it has to the next node
+                // and allow for javascript garbage collection
+                let nodeToDelete = currentNode.getNextNode();
+                nodeToDelete.addNextNode(null); // Ensures reference to next node is empty and so garbage collector will remove this item.
+
+                // Add the nodeAfterDeletedNode so the currentNode points to the node after the one we are deleting
+                currentNode.addNextNode(nodeAfterDeletedNode);
+                // The node we have "deleted" is still somewhere in memory; it has just been deleted
             }
         }
     }
@@ -116,9 +148,19 @@ console.log(list.indexOf('time')); // 3
 console.log(list.indexOf('hello there!')); // undefined
 
 // --- Add a word at index 3 ---
+console.log("### Add a word at index 3 ###")
 list.insertAtIndex('short', 3);
 console.log(list.read(0)); // once
 console.log(list.read(1)); // upon
 console.log(list.read(2)); // a
 console.log(list.read(3)); // short
 console.log(list.read(4)); // time
+
+// --- Delete the word at index 3 ---
+console.log("### Delete the word at index 3 ###")
+list.deleteAtIndex(3);
+console.log(list.read(0)); // once
+console.log(list.read(1)); // upon
+console.log(list.read(2)); // a
+console.log(list.read(3)); // time
+console.log(list.read(4)); // undefined
