@@ -54,6 +54,31 @@ const linkedListModule = (() => {
                     currentIndex += 1;
                 }
                 return undefined;
+            },
+
+            // Insert - insert an item at a given index
+            insertAtIndex: (value, index) => {
+                let newNode = node(value);
+                // If we are inserting at the beginning of the list
+                if(index === 0){
+                    newNode.addNextNode = _firstNode;
+                    _firstNode = newNode;
+                    return;
+                }
+                
+                // If we are inserting anywhere other than the beginning
+                let currentNode = _firstNode;
+                let currentIndex = 0;
+
+                // First, access the node immediately before where the new node will go
+                while (currentIndex < (index - 1)) {
+                    currentNode = currentNode.getNextNode();
+                    currentIndex += 1;
+                }
+                // Have the new node link to the next node
+                newNode.addNextNode(currentNode.getNextNode());
+                // Modify the link of the previous node to point to our new node
+                currentNode.addNextNode(newNode);
             }
         }
     }
@@ -89,3 +114,11 @@ console.log(list.indexOf('upon')); // 1
 console.log(list.indexOf('a')); // 2
 console.log(list.indexOf('time')); // 3
 console.log(list.indexOf('hello there!')); // undefined
+
+// --- Add a word at index 3 ---
+list.insertAtIndex('short', 3);
+console.log(list.read(0)); // once
+console.log(list.read(1)); // upon
+console.log(list.read(2)); // a
+console.log(list.read(3)); // short
+console.log(list.read(4)); // time
