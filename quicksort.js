@@ -86,3 +86,35 @@ quicksortModule.setArray(anotherArray);
 let thirdLowest = quicksortModule.quickSelect(4); // find the third lowest value, expect 3
 console.log(thirdLowest);
 console.log(quicksortModule.viewArray());
+
+// Use quicksort to speed up finding a missing number
+
+let missingNumber = [10, 5, 8, 9, 3, 4, 2, 7, 1, 0];
+
+const findMissingNumber = (array) => {
+    quicksortModule.setArray(array);
+    quicksortModule.quicksort();
+    array = quicksortModule.viewArray();
+    for(let i = 0; i < array.length; i++) {
+        if(array[i] !== i){
+            return i;
+        }
+    }
+}
+let aMissingNumber = findMissingNumber(missingNumber);
+console.log("The number missing from the array is: ", aMissingNumber);
+
+// Use quicksort to speed up calculating the three greatest numbers in an array
+let aNewArray = [3, 4, 1, 7, 6, 9, 2, 4, 6, 8, 10, 14, 5]; // Three greatest numbers are 14 * 10 * 9
+const threeLargest = (array) => {
+    quicksortModule.setArray(array);
+    quicksortModule.quicksort();
+    array = quicksortModule.viewArray();
+    let res = 1;
+    for(let i = array.length - 1; i >= array.length - 3; i--){
+        res = res * array[i];
+    }
+    return res;
+}
+let threeGreatestNumbers = threeLargest(aNewArray);
+console.log("The three largest numbers multiply to: ", threeGreatestNumbers);
