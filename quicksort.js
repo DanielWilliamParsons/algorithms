@@ -12,7 +12,6 @@ const quicksortModule = (() => {
         right--; // start the right pointer one to the left of the pivot index
 
         while (true) {
-            console.log(array);
 
             while (array[left] < pivot) {
                 left++;
@@ -35,16 +34,15 @@ const quicksortModule = (() => {
         }
         array[pivotIndex] = array[left];
         array[left] = pivot;
-        console.log(left)
         return left;
     }
 
-    const quicksort = (left = 0, right = myArray.length - 1) => {
+    const quicksort = (left = 0, right = array.length - 1) => {
+        // Base case
         if(right - left <= 0) {
             return;
         }
         let pivotIndex = partition(left, right); // Partition into 2 parts
-        console.log(pivotIndex); // Pivot is the place where we partition the array
         quicksort(left, pivotIndex - 1); // Quicksort left side
         quicksort(pivotIndex + 1, right); // Quicksort right side
     }
@@ -57,11 +55,34 @@ const quicksortModule = (() => {
         return array;
     }
 
-    return { quicksort, viewArray, setArray }
+    const quickSelect = (kthLowestVal, left = 0, right = array.length - 1) => {
+        // Base case
+        if (right - left <= 0) {
+            return array[left];
+        }
+
+        let pivotIndex = partition(left, right);
+
+        if (kthLowestVal < pivotIndex) {
+            return quickSelect(kthLowestVal, left, pivotIndex - 1);
+        } else if (kthLowestVal > pivotIndex) {
+            return quickSelect(kthLowestVal, pivotIndex + 1, right);
+        } else {
+            return array[pivotIndex];
+        }
+    }
+
+    return { quicksort, viewArray, setArray, quickSelect }
 
 })();
 
 let myArray = [0, 5, 2, 1, 6, 3];
-let partition = quicksortModule.setArray(myArray);
-let quicksortedArray = quicksortModule.quicksort();
+quicksortModule.setArray(myArray);
+quicksortModule.quicksort();
+console.log(quicksortModule.viewArray());
+
+let anotherArray = [0, 6, 8, 9, 3, 4, 5, 1, 2, 7];
+quicksortModule.setArray(anotherArray);
+let thirdLowest = quicksortModule.quickSelect(4); // find the third lowest value, expect 3
+console.log(thirdLowest);
 console.log(quicksortModule.viewArray());
