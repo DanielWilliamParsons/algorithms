@@ -24,18 +24,31 @@ const queueModule = (() => {
 
             getNextNode: () => {
                 if(!_nextNode){
-                    return "";
+                    return null;
                 }
                 return _nextNode;
             },
 
             getPreviousNode: () => {
+                if(!_previousNode){
+                    return null;
+                }
                 return _previousNode;
             },
 
             printNode: () => {
                 return [_data];
-            }
+            },
+
+            // Recursively prints all previous nodes
+            printAllPreviousNodes: () => {
+                console.log(_data);
+                if(_previousNode !== null) {
+                    return _previousNode.printAllPreviousNodes();
+                } else {
+                    return;
+                }
+            },
         }
     };
 
@@ -70,6 +83,11 @@ const queueModule = (() => {
                     currentNode = currentNode.getNextNode();
                     currentIndex += 1;
                 }
+            },
+
+            // Print all the elements in reverse order
+            printAllReverse: () => {
+                _lastNode.printAllPreviousNodes();
             },
 
             // insert at end - because it is a queue
@@ -117,7 +135,7 @@ const queueModule = (() => {
                 _data.insertAtEnd(element);
             },
 
-            dequeue: (element) => {
+            dequeue: () => {
                 let removedNode = _data.removeFromFront();
                 return removedNode;
             },
@@ -127,12 +145,16 @@ const queueModule = (() => {
                     return null;
                 }
                 return _data.read();
+            },
+
+            printAllReverse: () => {
+                _data.printAllReverse();
             }
 
         }
     };
 
-    return { node, doublyLinkedList, queue };
+    return { queue };
 
 })();
 
@@ -143,14 +165,15 @@ queue.enqueue("how");
 queue.enqueue("are");
 queue.enqueue("you");
 queue.enqueue("doing");
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
-console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+// console.log(queue.dequeue());
+queue.printAllReverse();
