@@ -19,12 +19,41 @@ const linkedListModule = (() => {
 
             getNodeData: () => {
                 return _data;
+            },
+
+            // Uses recursion to print all the nodes
+            printNextNode: () => {
+                console.log(_data);
+                if (_nextNode !== undefined) {
+                    _nextNode.printNextNode();
+                } else {
+                    return;
+                }
+            },
+
+            // Recursively get the final next node
+            getLastNode: () => {
+                if(_nextNode.getNextNode() === undefined || _nextNode.getNextNode() === null) {
+                    return (_nextNode);
+                } else {
+                    return _nextNode.getLastNode();
+                }
+            },
+
+            // Recursively append a node to the final node
+            appendToLastNode: (aNewNode) => {
+                if(_nextNode === undefined) {
+                    _nextNode = aNewNode;
+                } else {
+                    _nextNode.appendToLastNode(aNewNode);
+                }
             }
         }
     }
 
     const linkedList = (firstNode) => {
-        const _firstNode = firstNode;
+        let _firstNode = firstNode;
+        let _size = 0;
 
         return {
             // Read - provide an index and return its value, worst case: O(N)
@@ -63,6 +92,7 @@ const linkedListModule = (() => {
                 if(index === 0){
                     newNode.addNextNode = _firstNode;
                     _firstNode = newNode;
+                    _size++;
                     return;
                 }
                 
@@ -79,6 +109,7 @@ const linkedListModule = (() => {
                 newNode.addNextNode(currentNode.getNextNode());
                 // Modify the link of the previous node to point to our new node
                 currentNode.addNextNode(newNode);
+                _size++
             },
 
             // Delete - delete an item at a given index
@@ -87,6 +118,7 @@ const linkedListModule = (() => {
                 if(index === 0){
                     nodeToDelete.addNextNode(null);
                     _firstNode = _firstNode.getNextNode();
+                    _size--;
 
                     return;
                 }
@@ -111,6 +143,24 @@ const linkedListModule = (() => {
                 // Add the nodeAfterDeletedNode so the currentNode points to the node after the one we are deleting
                 currentNode.addNextNode(nodeAfterDeletedNode);
                 // The node we have "deleted" is still somewhere in memory; it has just been deleted
+                _size--;
+            },
+
+            printAllNodes: () => {
+                _firstNode.printNextNode();
+            },
+
+            // Use lots of recursion to reverse the list.
+            reverseList: () => {
+                let previousNode = undefined;
+                let currentNode = _firstNode;
+                while (currentNode) {
+                    let nextNode = currentNode.getNextNode();
+                    currentNode.addNextNode(previousNode);
+                    previousNode = currentNode;
+                    currentNode = nextNode;
+                }
+                _firstNode = previousNode;
             }
         }
     }
@@ -148,7 +198,7 @@ console.log(list.indexOf('time')); // 3
 console.log(list.indexOf('hello there!')); // undefined
 
 // --- Add a word at index 3 ---
-console.log("### Add a word at index 3 ###")
+console.log("### Add a word at index 3 ###");
 list.insertAtIndex('short', 3);
 console.log(list.read(0)); // once
 console.log(list.read(1)); // upon
@@ -157,10 +207,19 @@ console.log(list.read(3)); // short
 console.log(list.read(4)); // time
 
 // --- Delete the word at index 3 ---
-console.log("### Delete the word at index 3 ###")
+console.log("### Delete the word at index 3 ###");
 list.deleteAtIndex(3);
 console.log(list.read(0)); // once
 console.log(list.read(1)); // upon
 console.log(list.read(2)); // a
 console.log(list.read(3)); // time
 console.log(list.read(4)); // undefined
+
+// --- Print all the nodes ---
+console.log("### Print all the nodes ###");
+list.printAllNodes();
+
+// --- Reverse the list and print to see what happens
+console.log("### Reverse the list ###");
+list.reverseList();
+list.printAllNodes();
