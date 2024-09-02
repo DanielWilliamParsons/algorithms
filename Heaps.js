@@ -147,35 +147,7 @@ class Heap {
 }
 
 let myHeap = new Heap();
-myHeap.insert(3);
-myHeap.viewHeap();
-myHeap.insert(10);
-myHeap.viewHeap();
-myHeap.insert(19);
-myHeap.viewHeap();
-myHeap.insert(1);
-myHeap.viewHeap();
-myHeap.insert(12);
-myHeap.viewHeap();
-myHeap.insert(22);
-myHeap.viewHeap();
-myHeap.insert(13);
-myHeap.viewHeap();
-myHeap.insert(6);
-myHeap.viewHeap();
-myHeap.insert(45);
-myHeap.viewHeap();
-myHeap.insert(35);
-myHeap.viewHeap();
-myHeap.insert(12);
-myHeap.viewHeap();
-myHeap.insert(19);
-myHeap.viewHeap();
-myHeap.insert(8);
-myHeap.viewHeap();
-myHeap.insert(7);
-myHeap.viewHeap();
-myHeap.insert(1);
+
 
 
 
