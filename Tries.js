@@ -50,7 +50,7 @@ class Trie {
             }
         }
         // Add * key at the end
-        aNode.setChildValue('*', null);
+        aNode.setChildValue('*', undefined);
     }
 
     searchWord(aWord, aNode=this.root) {
@@ -59,10 +59,10 @@ class Trie {
                 console.log(char);
                 aNode = aNode.getChildren(char);
             } else {
-                return "Not present!";
+                return undefined;
             }
         }
-        return (aWord);
+        return (aNode); // returns the final node - useful later for autocomplete
     }
 
     collectAllWords(words=[], node=this.root, word="") {
@@ -73,17 +73,24 @@ class Trie {
         let currentNode = node;
 
         for (const [char, childTrieNode] of currentNode.getChild().entries()) {
-            console.log(char);
+            
             if (char === "*") {
                 words.push(word)
-                console.log(words);
             } else {
                 this.collectAllWords(words, childTrieNode, word + char);
             }
+
         }
 
         return words;
+    }
 
+    autoComplete(prefix) {
+        let currentNode = this.searchWord(prefix);
+        if(currentNode === undefined) {
+            return undefined;
+        }
+        return this.collectAllWords([], currentNode);
     }
 }
 
@@ -98,3 +105,9 @@ console.log(tryme.searchWord("Hello"));
 console.log(tryme.searchWord("Help"));
 console.log("---Collecting all the words---");
 console.log(tryme.collectAllWords());
+console.log("---AutoComplete---")
+console.log(tryme.autoComplete("H"));
+console.log(tryme.autoComplete("In"));
+console.log(tryme.autoComplete("Ho"));
+console.log(tryme.autoComplete("Mar"));
+console.log(tryme.autoComplete("Marl"));
