@@ -2,6 +2,9 @@
  * TRIES
  * The root node is a TrieNode. It has a Map property containing keys and values
  * Each value is itself a TrieNode
+ * 
+ * search is O(1)
+ * insert is O(K) where K is the length of our word
  */
 
 class TrieNode {
@@ -15,6 +18,10 @@ class TrieNode {
         } else {
             return false;
         }
+    }
+
+    getChild() {
+        return this.children;
     }
 
     getChildren(char) {
@@ -57,6 +64,27 @@ class Trie {
         }
         return (aWord);
     }
+
+    collectAllWords(words=[], node=this.root, word="") {
+        // The first parameter, words, begins an empty array and will contain all the words
+        // node is the node whose descendants we are collecting words from.
+        // word begins as an empty string and we add characters to it.
+
+        let currentNode = node;
+
+        for (const [char, childTrieNode] of currentNode.getChild().entries()) {
+            console.log(char);
+            if (char === "*") {
+                words.push(word)
+                console.log(words);
+            } else {
+                this.collectAllWords(words, childTrieNode, word + char);
+            }
+        }
+
+        return words;
+
+    }
 }
 
 let tryme = new Trie();
@@ -68,3 +96,5 @@ tryme.addWord("Interesting");
 console.log(tryme.root);
 console.log(tryme.searchWord("Hello"));
 console.log(tryme.searchWord("Help"));
+console.log("---Collecting all the words---");
+console.log(tryme.collectAllWords());
